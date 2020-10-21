@@ -2,7 +2,7 @@
 $hostname='localhost';
 $user='user'; 
 $pass='pass';
-$dbase='ctrmn_demo';
+$dbase='database';
 
 $connection = @mysql_connect("$hostname" , "$user" , "$pass")
 or die ("Can't connect to MySQL");
