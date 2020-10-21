@@ -7,7 +7,7 @@
 
     <integer name="preference_default_interval">1</integer>
     <bool name="preference_default_send_enabled">false</bool>
-    <string name="preference_default_send_url">https://demo.ct-rmn.ro/smshub.php</string>
+    <string name="preference_default_send_url">https://yourserver.com/smshub.php</string>
     <string name="preference_default_device_id">10</string>
     <string name="preference_default_device_secret">1234</string>
 
