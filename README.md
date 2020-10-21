@@ -1,9 +1,9 @@
 # SMSComet
 
-Original from https://github.com/juancrescente/SMSHub
-Modified for my need, RO language, only one URL for PHP.
-Added deveiceSecret in POST request.
-
+Original from https://github.com/juancrescente/SMSHub\n
+Modified for my need, RO language, only one URL for PHP.\n
+Added deveiceSecret in POST request.\n
+Olso added "keepScreenOn" as a workaround "not sending SMS if screen is off"\n
 
 ### settings
 
