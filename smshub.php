@@ -20,7 +20,7 @@ $db = mysql_select_db($dbase , $connection) or die ("Can't select database.");
 			$reply[] = [
 				"number" => $fetch["telefon"],
 				"message" => $fetch["mesaj"],
-				"messageId" => $fetch["id_mesaj"]
+				"messageId" => strval($fetch["id_mesaj"])
 			];
 
 		}
