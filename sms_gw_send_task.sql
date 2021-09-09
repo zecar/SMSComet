@@ -1,11 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 4.9.5
--- https://www.phpmyadmin.net/
---
--- Gazdă: localhost:3306
--- Timp de generare: oct. 21, 2020 la 11:26 PM
--- Versiune server: 5.6.49
--- Versiune PHP: 7.3.6
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -18,9 +11,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Bază de date: `ctrmn_demo`
---
+
 
 -- --------------------------------------------------------
 
