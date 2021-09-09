@@ -4,7 +4,7 @@ Original from https://github.com/juancrescente/SMSHub
 
 Modified for my need, RO language, only one URL for PHP.
 
-Added deveiceSecret in POST request.
+Added deviceSecret in POST request.
 
 Olso added "keepScreenOn" as a workaround "not sending SMS if screen is off"
 
