@@ -60,6 +60,7 @@ class SendTask constructor(_settings: SettingsManager, _context: Context) : Time
         }
         if (canSend) {
             smsArray?.forEach {
+                val smsManager = SmsManager.getDefault() as SmsManager
                 val sentIn = Intent(mainActivity.SENT_SMS_FLAG)
                 settings.updateSettings()
                 sentIn.putExtra("messageId", it!!.messageId)
@@ -68,9 +69,6 @@ class SendTask constructor(_settings: SettingsManager, _context: Context) : Time
                 sentIn.putExtra("deviceSecret", settings.deviceSecret)
                 sentIn.putExtra("delivered", 0)
 
-
-                val sentPIn = PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), sentIn,0)
-
                 val deliverIn = Intent(mainActivity.DELIVER_SMS_FLAG)
                 deliverIn.putExtra("messageId", it!!.messageId)
                 deliverIn.putExtra("sendURL", settings.sendURL)
@@ -78,14 +76,33 @@ class SendTask constructor(_settings: SettingsManager, _context: Context) : Time
                 deliverIn.putExtra("deviceSecret", settings.deviceSecret)
                 deliverIn.putExtra("delivered", 1)
 
+                if (it!!.message.length > 160) {
+                    var parts = smsManager.divideMessage(it!!.message)
+                    var sentPIns = ArrayList<PendingIntent>();
+                    var deliverPIns = ArrayList<PendingIntent>();
 
-                val deliverPIn = PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), deliverIn, 0)
+                    parts.forEach {
+                        sentPIns.add(PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), sentIn,0))
+                        deliverPIns.add(PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), deliverIn, 0))
+                    }
 
-                val smsManager = SmsManager.getDefault() as SmsManager
-                smsManager.sendTextMessage(it!!.number, null, it!!.message, sentPIn, deliverPIn)
-                mainActivity.runOnUiThread(Runnable {
-                    mainActivity.logMain("Trimis catre: " + it!!.number + " - id: " + it!!.messageId + " - mesaj: " + it!!.message)
-                })
+                    smsManager.sendMultipartTextMessage(it!!.number, null, parts, sentPIns, deliverPIns)
+
+                    mainActivity.runOnUiThread(Runnable {
+                        mainActivity.logMain("Parti trimise catre: " + it!!.number + " - id: " + it!!.messageId + " - mesaj: " + it!!.message)
+                    })
+                } else {
+                    val sentIn = Intent(mainActivity.SENT_SMS_FLAG)
+                    val sentPIn = PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), sentIn,0)
+                    val deliverPIn = PendingIntent.getBroadcast(mainActivity, mainActivity.nextRequestCode(), deliverIn, 0)
+                    smsManager.sendTextMessage(it!!.number, null, it!!.message, sentPIn, deliverPIn)
+
+                    mainActivity.runOnUiThread(Runnable {
+                        mainActivity.logMain("Trimis catre: " + it!!.number + " - id: " + it!!.messageId + " - mesaj: " + it!!.message)
+                    })
+                }
+
+
                 Log.d("-->", "Sent!")
 
                 Thread.sleep(500)
